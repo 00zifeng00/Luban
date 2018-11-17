@@ -1,9 +1,15 @@
 package top.zibin.luban.example;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +43,7 @@ import top.zibin.luban.OnRenameListener;
 
 public class MainActivity extends AppCompatActivity {
   private static final String TAG = "Luban";
+  private static final int range = 3;
 
   private List<ImageBean> mImageList = new ArrayList<>();
   private ImageAdapter mAdapter = new ImageAdapter(mImageList);
@@ -54,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     mRecyclerView.setAdapter(mAdapter);
+
+    initPermission();
   }
 
   @Override
@@ -93,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
   private List<File> assetsToFiles() {
     final List<File> files = new ArrayList<>();
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < range; i++) {
       try {
         InputStream is = getResources().getAssets().open("img_" + i);
         File file = new File(getExternalFilesDir(null), "test_" + i);
@@ -122,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     final List<Uri> uris = new ArrayList<>();
     final List<File> files = assetsToFiles();
 
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < range; i++) {
       Uri uri = Uri.fromFile(files.get(i));
       uris.add(uri);
     }
@@ -233,5 +242,12 @@ public class MainActivity extends AppCompatActivity {
     size[1] = options.outHeight;
 
     return size;
+  }
+
+  @TargetApi(Build.VERSION_CODES.M)
+  private void initPermission() {
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x0001);
+    }
   }
 }

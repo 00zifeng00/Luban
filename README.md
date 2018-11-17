@@ -9,6 +9,8 @@
 
 `Luban`（鲁班） —— `Android`图片压缩工具，仿微信朋友圈压缩策略。
 
+`Luban-turbo` —— 鲁班项目的`turbo`版本，[查看`trubo`分支](https://github.com/Curzibn/Luban/tree/turbo)。
+
 # 项目描述
 
 目前做`App`开发总绕不开图片这个元素。但是随着手机拍照分辨率的提升，图片的压缩成为一个很重要的问题。单纯对图片进行裁切，压缩已经有很多文章介绍。但是裁切成多少，压缩成多少却很难控制好，裁切过头图片太小，质量压缩过头则显示效果太差。
@@ -32,7 +34,7 @@
 # 导入
 
 ```sh
-implementation 'top.zibin:Luban:1.1.7'
+implementation 'top.zibin:Luban:1.1.8'
 ```
 
 # 使用
